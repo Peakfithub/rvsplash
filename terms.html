@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RV Splash Terms</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: navy header band, then a sticky contents rail beside numbered clauses at reading width. */
+:root {
+  --bg: #F2F8FA; --surface: #FFFFFF; --ink: #0C2A36; --muted: #4A6875;
+  --water: #0B86B3; --water-deep: #075B7C; --sun: #FFC21A; --on-sun: #1B1400;
+  --line: #CDDFE6; --band: #0A4860; --band-fg: #F1FAFD; --band-muted: #B5D6E2; --splash: #35C3F0;
+  --mark: #FFF1C2;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #071B23; --surface: #0D2A35; --ink: #E7F4F8; --muted: #9BB7C2;
+    --water: #3DB8E0; --water-deep: #86D6EF; --line: #1F4352; --band: #0B3545; --band-muted: #A9CBD7;
+    --mark: #4A3B0A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #071B23; --surface: #0D2A35; --ink: #E7F4F8; --muted: #9BB7C2;
+  --water: #3DB8E0; --water-deep: #86D6EF; --line: #1F4352; --band: #0B3545; --band-muted: #A9CBD7;
+  --mark: #4A3B0A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+a { color: var(--water-deep); }
+:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+h1, h2 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 6vw, 4rem); font-weight: 800; text-transform: uppercase; }
+h2 { font-size: 1.7rem; font-weight: 700; text-transform: uppercase; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { color: var(--water); font-variant-numeric: tabular-nums; min-width: 1.6em; }
+p, ul { margin: 0; }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band); border-bottom: 1px solid color-mix(in srgb, var(--band-fg) 18%, transparent); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 10px; }
+.brand { display: inline-flex; flex-direction: column; gap: 1px; text-decoration: none; }
+.brand svg { width: 100%; height: auto; display: block; }
+.wordmark { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 2.3rem; line-height: 0.9; text-transform: uppercase; color: var(--band-fg); white-space: nowrap; padding-right: 0.08em; }
+.wordmark b { color: var(--splash); font-weight: 800; }
+.stripe-a { fill: none; stroke: var(--sun); stroke-width: 10; stroke-linecap: round; }
+.stripe-b { fill: none; stroke: var(--splash); stroke-width: 5; stroke-linecap: round; }
+.back { color: var(--band-fg); font-weight: 600; text-decoration: none; }
+.back:hover { color: var(--sun); text-decoration: underline; }
+
+.intro { padding-block: 56px 36px; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--display); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--water-deep); }
+.intro p { color: var(--muted); max-width: 64ch; }
+.updated { font-weight: 600; color: var(--ink) !important; }
+
+.layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 56px; padding-block: 40px 80px; align-items: start; }
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); display: flex; flex-direction: column; gap: 10px; }
+.toc strong { font-family: var(--display); letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.95rem; color: var(--muted); }
+.toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 0.95rem; }
+.toc a { text-decoration: none; color: var(--ink); display: flex; gap: 8px; }
+.toc a span { color: var(--water); font-variant-numeric: tabular-nums; min-width: 1.4em; }
+.toc a:hover { color: var(--water-deep); text-decoration: underline; }
+
+.terms { display: flex; flex-direction: column; gap: 40px; max-width: 68ch; min-width: 0; }
+.terms section { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: 96px; }
+.terms ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 6px; }
+.fill { background: var(--mark); padding: 0 4px; border-radius: 2px; font-weight: 600; }
+.summary { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--sun); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.summary strong { font-family: var(--display); font-size: 1.25rem; text-transform: uppercase; }
+.contact { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 20px; }
+.contact dt { color: var(--muted); }
+.contact dd { margin: 0; font-weight: 600; user-select: all; }
+
+footer { background: var(--band); color: var(--band-muted); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 26px; }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .toc { position: static; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="stripes" viewBox="0 0 480 60">
+    <path class="stripe-a" d="M8 34C90 4 160 4 240 26S390 48 472 14"/>
+    <path class="stripe-b" d="M60 50C130 28 180 30 250 44S380 58 440 40"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="RV Splash home">
+      <span class="wordmark">RV <b>Splash</b></span>
+      <svg viewBox="0 0 480 60" aria-hidden="true"><use href="#stripes"/></svg>
+    </a>
+    <a class="back" href="./">Back to the main site</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="intro">
+      <span class="eyebrow">Legal</span>
+      <h1>Terms and Conditions</h1>
+      <p class="updated">Last updated October 12, 2026</p>
+      <p>These terms apply to every wash, repair, monthly plan and account with RV Splash ("we", "us"). By booking a service, signing up for a plan or creating an account at RVsplash.com, you agree to them.</p>
+      <div class="summary">
+        <strong>The short version</strong>
+        <p>Prices are quoted before we start and confirmed on site. We never replace parts without your OK. Monthly plans have a three-month minimum, then you can cancel any time. Tell us about any damage within 48 hours and we will make it right.</p>
+      </div>
+    </div>
+
+    <div class="layout">
+      <nav class="toc" aria-label="Sections">
+        <strong>Contents</strong>
+        <ol>
+          <li><a href="#services"><span>1</span>Our services</a></li>
+          <li><a href="#pricing"><span>2</span>Quotes and pricing</a></li>
+          <li><a href="#booking"><span>3</span>Booking and cancelling</a></li>
+          <li><a href="#site"><span>4</span>Your site and your RV</a></li>
+          <li><a href="#repairs"><span>5</span>Repairs and parts</a></li>
+          <li><a href="#plans"><span>6</span>Monthly plans</a></li>
+          <li><a href="#payment"><span>7</span>Payment</a></li>
+          <li><a href="#damage"><span>8</span>Damage and claims</a></li>
+          <li><a href="#warranty"><span>9</span>Repair warranty</a></li>
+          <li><a href="#liability"><span>10</span>Limits of liability</a></li>
+          <li><a href="#accounts"><span>11</span>Accounts and your information</a></li>
+          <li><a href="#law"><span>12</span>Governing law</a></li>
+          <li><a href="#changes"><span>13</span>Changes to these terms</a></li>
+          <li><a href="#contact"><span>14</span>Contact us</a></li>
+        </ol>
+      </nav>
+
+      <article class="terms">
+        <section id="services">
+          <h2><span class="n">1</span>Our services</h2>
+          <p>We wash and repair motorhomes, fifth wheels, travel trailers and toy haulers. Washes are done at your driveway, storage lot or campsite. Some repairs need parts ordered in advance or must be done on a separate visit.</p>
+          <p>We may decline a job if the site is unsafe, the RV cannot be reached, or the work needs a specialist we do not provide. If we decline, we tell you why and you are not charged.</p>
+        </section>
+
+        <section id="pricing">
+          <h2><span class="n">2</span>Quotes and pricing</h2>
+          <p>Wash prices are charged per foot of RV length, measured bumper to bumper, including the tongue or pin box on towables. The estimator on our website gives an estimate only.</p>
+          <ul>
+            <li>We confirm the final price on site before starting. If the length, condition or job differs from what you told us, we tell you the new price and you can decline without charge.</li>
+            <li>Heavy oxidation, tree sap, paint overspray or other unusual buildup may add cost. We will tell you before doing that work.</li>
+            <li>Prices shown on RVsplash.com can change. The price confirmed for your job is the one you pay.</li>
+          </ul>
+        </section>
+
+        <section id="booking">
+          <h2><span class="n">3</span>Booking and cancelling</h2>
+          <ul>
+            <li>A booking is confirmed when we reply with a date and time.</li>
+            <li>To cancel or reschedule, tell us at least <span class="fill">24 hours</span> before the appointment. Cancelling with less notice may carry a fee of <span class="fill">$50</span>.</li>
+            <li>If rain, high wind, freezing temperatures or lightning make the work unsafe or poor quality, we reschedule at no cost to you.</li>
+            <li>If we cannot reach the RV when we arrive (a locked gate, a blocked space, no access code), it counts as a late cancellation.</li>
+          </ul>
+        </section>
+
+        <section id="site">
+          <h2><span class="n">4</span>Your site and your RV</h2>
+          <p>You are responsible for making sure:</p>
+          <ul>
+            <li>You have permission to have the RV washed or repaired where it is parked. Some storage lots, campgrounds and homeowner associations restrict this.</li>
+            <li>We have a safe working area around the RV and, where needed, access to water and power. If none is available, tell us when booking.</li>
+            <li>Windows, roof vents, doors and compartments are closed and latched before a wash.</li>
+            <li>Loose items, covers and valuables are removed from the outside of the RV.</li>
+            <li>You tell us about known leaks, soft spots, damaged seals or loose trim before we start.</li>
+          </ul>
+          <p>You do not need to be present for a wash. For repairs, someone must be able to approve the quote.</p>
+        </section>
+
+        <section id="repairs">
+          <h2><span class="n">5</span>Repairs and parts</h2>
+          <ul>
+            <li>Repair labor is charged at <span class="fill">$145 per hour</span>, with a one-hour diagnostic minimum.</li>
+            <li>We quote parts before ordering them and do not replace anything without your approval.</li>
+            <li>Special-order parts may need to be paid for before we order them and may not be returnable.</li>
+            <li>Old parts we remove are yours to keep if you ask before the work starts. Otherwise we dispose of them.</li>
+            <li>Some problems are only found once work begins. If that happens, we stop and ask before doing more.</li>
+          </ul>
+        </section>
+
+        <section id="plans">
+          <h2><span class="n">6</span>Monthly plans</h2>
+          <ul>
+            <li>Plans are billed monthly at the per-foot rate for your plan, using your RV's confirmed length.</li>
+            <li>Every plan has a three-month minimum. After that, you can cancel any time with notice before your next billing date.</li>
+            <li>You can pause a plan for any month the RV is in storage or on the road. Tell us before that month's visit is scheduled.</li>
+            <li>Visits that are not used in a month do not carry over, unless we missed or cancelled the visit.</li>
+            <li>The 10% repair labor discount on Splash Total applies only while the plan is active and paid.</li>
+            <li>If you change RVs, the plan price changes to match the new length from the next billing date.</li>
+          </ul>
+        </section>
+
+        <section id="payment">
+          <h2><span class="n">7</span>Payment</h2>
+          <ul>
+            <li>Payment for washes and repairs is due when the work is finished.</li>
+            <li>Plan payments are charged at the start of each billing month.</li>
+            <li>If a payment fails, we may pause service until it is resolved.</li>
+            <li>We accept <span class="fill">[payment methods you accept]</span>.</li>
+          </ul>
+        </section>
+
+        <section id="damage">
+          <h2><span class="n">8</span>Damage and claims</h2>
+          <p>We photograph the RV before we start and note any damage we see. We are not responsible for conditions that existed before our visit, including:</p>
+          <ul>
+            <li>Oxidation, fading, peeling decals or failing clear coat</li>
+            <li>Dried, cracked or failing sealant and seals</li>
+            <li>Loose trim, cracked fiberglass or worn awning fabric</li>
+            <li>Leaks that come from existing damage</li>
+          </ul>
+          <p>If you believe we caused damage, tell us within 48 hours of the visit, with photos if you can. We will inspect it and repair it or pay for the repair if we are responsible.</p>
+        </section>
+
+        <section id="warranty">
+          <h2><span class="n">9</span>Repair warranty</h2>
+          <p>We guarantee our repair workmanship for <span class="fill">90 days</span> from the date of the repair. If the same repair fails because of our work in that time, we fix it at no labor cost. Parts are covered by their manufacturer's warranty. The warranty does not cover damage from accidents, misuse, storms or work done by others.</p>
+        </section>
+
+        <section id="liability">
+          <h2><span class="n">10</span>Limits of liability</h2>
+          <p>To the extent the law allows, our total responsibility for any claim is limited to the amount you paid for the service involved. We are not responsible for lost trips, campsite fees, lodging or other indirect costs. Nothing in these terms limits rights you have under consumer protection law.</p>
+        </section>
+
+        <section id="accounts">
+          <h2><span class="n">11</span>Accounts and your information</h2>
+          <ul>
+            <li>When you create an account or request a quote, we keep your name, phone, email and RV details so we can provide service.</li>
+            <li>We may keep notes on your account about past visits, repairs and requests. These notes are for our staff.</li>
+            <li>We do not sell your information. We share it only when needed to provide service, such as with a parts supplier, or when the law requires it.</li>
+            <li>You can ask us to update or delete your account at any time.</li>
+            <li>Keep your account details accurate. You are responsible for activity under your account.</li>
+          </ul>
+        </section>
+
+        <section id="law">
+          <h2><span class="n">12</span>Governing law</h2>
+          <p>These terms are governed by the laws of the State of <span class="fill">[your state]</span>. If a disagreement comes up, contact us first and we will try to resolve it directly.</p>
+        </section>
+
+        <section id="changes">
+          <h2><span class="n">13</span>Changes to these terms</h2>
+          <p>We may update these terms. The date at the top shows when they last changed. Changes do not affect work already booked or completed. If we change plan terms, we tell plan customers at least 30 days before the change applies.</p>
+        </section>
+
+        <section id="contact">
+          <h2><span class="n">14</span>Contact us</h2>
+          <dl class="contact">
+            <dt>Business</dt><dd>RV Splash</dd>
+            <dt>Phone</dt><dd>(555) 010-0199</dd>
+            <dt>Email</dt><dd>hello@rvsplash.com</dd>
+            <dt>Website</dt><dd>RVsplash.com</dd>
+          </dl>
+        </section>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>RVsplash.com · RV wash and repair</span>
+    <a class="back" href="./">Back to the main site</a>
+  </div>
+</footer>
+</body>
+</html>

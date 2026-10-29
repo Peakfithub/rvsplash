@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="RV Splash: RV washing, monthly wash plans and RV repair, priced by the foot.">
+<title>RV Splash</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: a deep-water hero band holding the per-foot estimator; everything after it is quiet, ruled lists on a cool white ground. */
+:root {
+  --bg: #F2F8FA;
+  --surface: #FFFFFF;
+  --ink: #0C2A36;
+  --muted: #4A6875;
+  --water: #0B86B3;
+  --water-deep: #075B7C;
+  --sun: #FFC21A;
+  --on-sun: #1B1400;
+  --line: #CDDFE6;
+  --band: #0A4860;
+  --band-fg: #F1FAFD;
+  --band-muted: #B5D6E2;
+  --splash: #35C3F0;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #071B23; --surface: #0D2A35; --ink: #E7F4F8; --muted: #9BB7C2;
+    --water: #3DB8E0; --water-deep: #86D6EF; --sun: #FFC21A; --on-sun: #1B1400;
+    --line: #1F4352; --band: #0B3545; --band-fg: #F1FAFD; --band-muted: #A9CBD7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #071B23; --surface: #0D2A35; --ink: #E7F4F8; --muted: #9BB7C2;
+  --water: #3DB8E0; --water-deep: #86D6EF; --sun: #FFC21A; --on-sun: #1B1400;
+  --line: #1F4352; --band: #0B3545; --band-fg: #F1FAFD; --band-muted: #A9CBD7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+a { color: var(--water-deep); }
+:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: 0.005em; }
+h1 { font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 800; text-transform: uppercase; }
+h2 { font-size: clamp(2rem, 4.2vw, 3rem); font-weight: 700; text-transform: uppercase; }
+h3 { font-size: 1.5rem; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-family: var(--display); font-weight: 600; font-size: 1rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--water-deep); }
+.lede { color: var(--muted); max-width: 60ch; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band); border-bottom: 1px solid color-mix(in srgb, var(--band-fg) 18%, transparent); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 10px; }
+.brand { display: inline-flex; flex-direction: column; gap: 1px; text-decoration: none; color: var(--band-fg); }
+.brand svg { width: 100%; height: auto; display: block; }
+.wordmark { font-family: var(--display); font-weight: 800; font-style: italic; font-size: 2.3rem; line-height: 0.9; text-transform: uppercase; color: var(--band-fg); white-space: nowrap; padding-right: 0.08em; }
+.wordmark b { color: var(--splash); font-weight: 800; }
+.stripe-a { fill: none; stroke: var(--sun); stroke-width: 10; stroke-linecap: round; }
+.stripe-b { fill: none; stroke: var(--splash); stroke-width: 5; stroke-linecap: round; }
+nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+nav a { color: var(--band-fg); text-decoration: none; font-weight: 500; }
+nav a:hover { color: var(--sun); text-decoration: underline; }
+.btn { display: inline-block; background: var(--sun); color: var(--on-sun); font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; padding: 10px 20px; border: 0; border-radius: 4px; cursor: pointer; }
+.btn:hover { filter: brightness(1.06); }
+nav a.btn, nav a.btn:hover { color: var(--on-sun); text-decoration: none; }
+
+/* Hero band */
+.hero { background: var(--band); color: var(--band-fg); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 64px; }
+.hero-copy { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.hero .eyebrow { color: var(--sun); }
+.hero p { color: var(--band-muted); max-width: 46ch; font-size: 1.15rem; }
+.hero-facts { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 0; margin: 0; list-style: none; color: var(--band-fg); font-weight: 500; }
+.hero-facts li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--sun); margin-right: 8px; }
+
+/* Estimator */
+.est { background: var(--surface); color: var(--ink); border-radius: 6px; padding: 22px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.est-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.est-len { font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; }
+#rig { width: 100%; height: auto; display: block; }
+.rig-body { fill: var(--water); }
+.rig-glass { fill: var(--surface); }
+.rig-tire { fill: var(--ink); }
+.rig-hub { fill: var(--line); }
+.rig-stripe { fill: none; stroke: var(--sun); stroke-width: 4; stroke-linecap: round; }
+.rig-ac { fill: var(--water-deep); }
+.rig-tick { stroke: var(--muted); stroke-width: 1; }
+.rig-label { fill: var(--muted); font-family: var(--body); font-size: 10px; text-anchor: middle; font-variant-numeric: tabular-nums; }
+.est input[type="range"] { width: 100%; accent-color: var(--water); }
+.est label, .field label, legend { font-weight: 600; font-size: 0.95rem; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.seg label { position: relative; display: block; border: 1px solid var(--line); border-radius: 4px; padding: 8px 6px; text-align: center; cursor: pointer; font-weight: 500; font-size: 0.92rem; line-height: 1.25; }
+.seg input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.seg label:has(input:checked) { background: var(--band); color: var(--band-fg); border-color: var(--band); }
+.seg label:has(input:focus-visible) { outline: 3px solid var(--sun); outline-offset: 2px; }
+.seg small { display: block; opacity: 0.8; }
+.addons { display: flex; flex-direction: column; gap: 4px; }
+.addons label { display: flex; gap: 8px; align-items: center; font-weight: 400; cursor: pointer; }
+.addons input { accent-color: var(--water); width: 17px; height: 17px; flex: none; }
+.addons span:last-child { margin-left: auto; color: var(--muted); white-space: nowrap; }
+.est-total { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 14px; }
+.est-total strong { font-family: var(--display); font-weight: 800; font-size: 2.6rem; line-height: 1; }
+.est-total span { color: var(--muted); font-size: 0.9rem; display: block; }
+
+/* Sections */
+section.block { padding-block: 72px; }
+section.block + section.block { border-top: 1px solid var(--line); }
+.head { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.tier { padding: 26px 24px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.tier + .tier { border-left: 1px solid var(--line); }
+.rate { font-family: var(--display); font-weight: 800; font-size: 3rem; line-height: 1; color: var(--water-deep); }
+.rate small { font-size: 1.1rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+.tier ul, .repairs ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.tier li { padding-left: 18px; position: relative; }
+.tier li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 9px; height: 3px; background: var(--water); border-radius: 2px; }
+.tier p { color: var(--muted); }
+
+.yours { border-top: 1px solid var(--line); padding-top: 12px; margin-top: auto; font-weight: 600; }
+.yours strong { font-family: var(--display); font-weight: 800; font-size: 1.6rem; color: var(--ink); }
+.sched-wrap { overflow-x: auto; margin-top: 36px; }
+.sched { border-collapse: collapse; width: 100%; min-width: 720px; font-variant-numeric: tabular-nums; }
+.sched caption { text-align: left; font-family: var(--display); font-weight: 700; font-size: 1.5rem; padding-bottom: 12px; }
+.sched th, .sched td { padding: 8px 4px; text-align: center; border-top: 1px solid var(--line); }
+.sched thead th { border-top: 0; color: var(--muted); font-weight: 500; font-size: 0.85rem; }
+.sched tbody th { text-align: left; font-weight: 600; white-space: nowrap; padding-right: 14px; }
+.v { display: block; border-radius: 3px; padding: 5px 2px; font-size: 0.8rem; font-weight: 600; line-height: 1.2; }
+.v-w { background: var(--bg); border: 1px solid var(--line); color: var(--muted); }
+.v-x { background: var(--band); border: 1px solid var(--band); color: var(--band-fg); }
+.v-d { background: var(--sun); border: 1px solid var(--sun); color: var(--on-sun); }
+.terms { margin-top: 24px; color: var(--muted); max-width: 70ch; }
+
+.repairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.repair { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 16px; padding-block: 18px; border-top: 1px solid var(--line); }
+.repair h3 { font-size: 1.35rem; color: var(--water-deep); text-transform: uppercase; }
+.repair p { color: var(--muted); }
+.note { margin-top: 28px; padding: 16px 18px; background: var(--surface); border-left: 4px solid var(--sun); color: var(--ink); max-width: 70ch; }
+
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding: 0; margin: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.steps li::before { content: counter(s); font-family: var(--display); font-weight: 800; font-size: 2.6rem; line-height: 1; color: var(--water); }
+.steps p { color: var(--muted); }
+
+.faq { max-width: 760px; }
+details { border-top: 1px solid var(--line); padding-block: 14px; }
+details:last-child { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 600; font-size: 1.08rem; }
+details p { color: var(--muted); margin-top: 8px; max-width: 65ch; }
+
+/* Booking */
+.book { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr); gap: 48px; align-items: start; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+input[type="text"], input[type="tel"], select, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; width: 100%; }
+textarea { min-height: 96px; resize: vertical; }
+.contact { display: flex; flex-direction: column; gap: 22px; }
+.contact dl { margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.contact dt { font-family: var(--display); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.95rem; color: var(--muted); }
+.contact dd { margin: 0; font-size: 1.25rem; font-weight: 600; user-select: all; }
+#result { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 16px; }
+#result pre { margin: 0; font-family: var(--body); white-space: pre-wrap; overflow-wrap: anywhere; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 12px; }
+.ghost { align-self: flex-start; font: inherit; font-weight: 600; background: none; color: var(--water-deep); border: 1px solid var(--water-deep); border-radius: 4px; padding: 8px 14px; cursor: pointer; }
+
+/* Mobile menu */
+.menu-btn { display: none; align-items: center; gap: 8px; font: inherit; font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--band-fg); background: transparent; border: 1px solid color-mix(in srgb, var(--band-fg) 35%, transparent); border-radius: 4px; padding: 8px 14px; min-height: 44px; cursor: pointer; }
+.menu-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.menu-btn .i-close { display: none; }
+.menu-btn[aria-expanded="true"] .i-open { display: none; }
+.menu-btn[aria-expanded="true"] .i-close { display: inline; }
+@media (max-width: 760px) {
+  .top .wrap { position: relative; flex-wrap: nowrap; }
+  .menu-btn { display: inline-flex; }
+  nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; background: var(--band); padding: 4px 20px 20px; border-bottom: 1px solid color-mix(in srgb, var(--band-fg) 18%, transparent); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25); max-height: calc(100vh - 90px); overflow-y: auto; }
+  nav.open { display: flex; }
+  nav a { padding: 14px 2px; font-size: 1.15rem; border-bottom: 1px solid color-mix(in srgb, var(--band-fg) 14%, transparent); }
+  nav a.btn { margin-top: 16px; text-align: center; border-bottom: 0; padding: 14px 20px; }
+}
+
+/* Account and admin */
+input[type="email"], input[type="number"], input[type="search"] { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; width: 100%; }
+.acct { max-width: 760px; display: flex; flex-direction: column; gap: 18px; }
+.acct .note { margin-top: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.facts { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 20px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.msg { color: var(--muted); font-weight: 500; }
+.adm-bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.adm-bar input { flex: 1 1 240px; width: auto; background: var(--surface); }
+.adm-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px; align-items: start; }
+.adm-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.adm { border-collapse: collapse; width: 100%; min-width: 560px; }
+.adm th, .adm td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.adm th { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+.adm tbody tr { cursor: pointer; }
+.adm tbody tr:hover, .adm tbody tr[aria-selected="true"] { background: var(--bg); }
+.adm tbody tr:last-child td { border-bottom: 0; }
+.adm small { color: var(--muted); display: block; }
+.adm button.row { font: inherit; font-weight: 600; color: var(--water-deep); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.empty { padding: 28px 20px; color: var(--muted); }
+.notes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; align-self: stretch; }
+.notes li { border-left: 3px solid var(--sun); background: var(--bg); padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.notes p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.notes .meta { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 0.85rem; }
+.link { font: inherit; font-size: 0.85rem; color: var(--water-deep); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+.card textarea { align-self: stretch; }
+.card .field { align-self: stretch; }
+.row-btns { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+@media (max-width: 860px) { .adm-grid { grid-template-columns: minmax(0, 1fr); } }
+
+footer { background: var(--band); color: var(--band-muted); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 26px; }
+footer .brand { align-items: stretch; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .book { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .hero .wrap { padding-block: 44px; }
+  .tiers { grid-template-columns: minmax(0, 1fr); }
+  .tier + .tier { border-left: 0; border-top: 1px solid var(--line); }
+  .repairs { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  section.block { padding-block: 52px; }
+}
+@media (max-width: 520px) {
+  .repair { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  form { grid-template-columns: minmax(0, 1fr); padding: 18px; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .est { padding: 16px; }
+}
+</style>
+<style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="stripes" viewBox="0 0 480 60">
+    <path class="stripe-a" d="M8 34C90 4 160 4 240 26S390 48 472 14"/>
+    <path class="stripe-b" d="M60 50C130 28 180 30 250 44S380 58 440 40"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="RV Splash home">
+      <span class="wordmark">RV <b>Splash</b></span>
+      <svg viewBox="0 0 480 60" aria-hidden="true"><use href="#stripes"/></svg>
+    </a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-open" d="M4 7h16M4 12h16M4 17h16"/><path class="i-close" d="M6 6l12 12M18 6L6 18"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav aria-label="Main" id="site-nav">
+      <a href="#wash">Wash</a>
+      <a href="#plans">Monthly plans</a>
+      <a href="#repair">Repair</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#book">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">RV wash and repair</span>
+        <h1>Clean rig. Fixed rig. One visit.</h1>
+        <p>RV Splash washes and repairs motorhomes, fifth wheels and travel trailers. Washing is priced by the foot, and you see the number before we pick up a brush.</p>
+        <ul class="hero-facts">
+          <li>Class A, B and C</li>
+          <li>Fifth wheels</li>
+          <li>Travel trailers</li>
+          <li>Toy haulers</li>
+        </ul>
+        <a class="btn" href="#book">Request service</a>
+      </div>
+
+      <div class="est" aria-labelledby="est-title">
+        <div class="est-head">
+          <h3 id="est-title">Wash estimate</h3>
+          <span class="est-len num"><span id="lenOut">32</span> ft</span>
+        </div>
+        <svg id="rig" viewBox="0 0 480 138" role="img" aria-label="Side view of an RV drawn to the selected length against a ruler marked in feet"></svg>
+        <div class="field">
+          <label for="len">RV length, bumper to hitch</label>
+          <input type="range" id="len" min="16" max="45" step="1" value="32">
+        </div>
+        <fieldset>
+          <legend>Package</legend>
+          <div class="seg">
+            <label><input type="radio" name="pkg" id="pkg-wash" value="wash">Wash<small class="num">$4 / ft</small></label>
+            <label><input type="radio" name="pkg" id="pkg-deep" value="deep" checked>Deep Wash<small class="num">$7 / ft</small></label>
+            <label><input type="radio" name="pkg" id="pkg-detail" value="detail">Full Detail<small class="num">$16 / ft</small></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Add-ons</legend>
+          <div class="addons">
+            <label><input type="checkbox" id="add-roof" data-ft="3" data-name="Roof clean and UV treatment"><span>Roof clean and UV treatment</span><span class="num">+$3 / ft</span></label>
+            <label><input type="checkbox" id="add-awning" data-flat="45" data-name="Awning scrub"><span>Awning scrub</span><span class="num">+$45</span></label>
+            <label><input type="checkbox" id="add-seals" data-flat="60" data-name="Slide-out seal conditioning"><span>Slide-out seal conditioning</span><span class="num">+$60</span></label>
+          </div>
+        </fieldset>
+        <div class="est-total">
+          <div><strong class="num" id="total">$224</strong><span>Estimate. Final price confirmed on site.</span></div>
+          <a class="btn" href="#book">Book this</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" id="wash">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Washing</span>
+        <h2>Three packages, priced by the foot</h2>
+        <p class="lede">Measure from the front bumper to the rear bumper or hitch. That number times the rate is your price.</p>
+      </div>
+      <div class="tiers">
+        <div class="tier">
+          <h3>Wash</h3>
+          <div class="rate num">$4 <small>/ FT</small></div>
+          <p>For a rig that is dusty from the road or coming out of storage.</p>
+          <ul>
+            <li>Hand wash, top of sidewalls to rocker panels</li>
+            <li>Bug removal on the front cap</li>
+            <li>Wheels, tires and wheel wells</li>
+            <li>Windows and mirrors, outside</li>
+            <li>Spot-free rinse and hand dry</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h3>Deep Wash</h3>
+          <div class="rate num">$7 <small>/ FT</small></div>
+          <p>For a rig with black streaks, a dirty roof or a season of buildup.</p>
+          <ul>
+            <li>Everything in Wash</li>
+            <li>Black streak removal</li>
+            <li>Roof wash</li>
+            <li>Tire dressing</li>
+            <li>Rubber seals wiped and inspected</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h3>Full Detail</h3>
+          <div class="rate num">$16 <small>/ FT</small></div>
+          <p>For oxidized, chalky finishes, or before you sell.</p>
+          <ul>
+            <li>Everything in Deep Wash</li>
+            <li>Oxidation removal and machine polish</li>
+            <li>Polished wheels and bright trim</li>
+            <li>Interior vacuum, surfaces and glass</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="plans">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Monthly maintenance plans</span>
+        <h2>One visit a month keeps it clean</h2>
+        <p class="lede">We come out once a month, wash the rig, and check the roof edges and seals while we are up there. "Deep" in the chart below means a Deep Wash. Plan pricing is lower than booking each wash on its own, and you get a photo report after every visit.</p>
+      </div>
+      <div class="tiers">
+        <div class="tier">
+          <h3>Splash Monthly</h3>
+          <div class="rate num">$3.50 <small>/ FT / MONTH</small></div>
+          <p>For a rig that is used regularly or parked outside.</p>
+          <ul>
+            <li>One hand wash every month</li>
+            <li>Bug removal, wheels, tires and windows</li>
+            <li>Roof edge and seal check each visit</li>
+            <li>Photo report of anything we find</li>
+          </ul>
+          <div class="yours">Your <span class="plan-len num">32</span> ft RV: <strong class="num" data-plan="3.5">$112</strong> / month</div>
+        </div>
+        <div class="tier">
+          <h3>Splash Plus</h3>
+          <div class="rate num">$4.50 <small>/ FT / MONTH</small></div>
+          <p>Adds a Deep Wash every third month so streaks and roof grime never build up.</p>
+          <ul>
+            <li>Everything in Splash Monthly</li>
+            <li>Deep Wash every third month, 4 a year</li>
+            <li>Tire dressing every visit</li>
+            <li>Awning scrub twice a year</li>
+          </ul>
+          <div class="yours">Your <span class="plan-len num">32</span> ft RV: <strong class="num" data-plan="4.5">$144</strong> / month</div>
+        </div>
+        <div class="tier">
+          <h3>Splash Total</h3>
+          <div class="rate num">$6 <small>/ FT / MONTH</small></div>
+          <p>Full exterior care, plus the checks that prevent leaks.</p>
+          <ul>
+            <li>Everything in Splash Plus</li>
+            <li>Roof clean and UV treatment twice a year</li>
+            <li>Full Detail once a year</li>
+            <li>Slide-out seal conditioning twice a year</li>
+            <li>Yearly pre-trip check</li>
+            <li>10% off repair labor</li>
+          </ul>
+          <div class="yours">Your <span class="plan-len num">32</span> ft RV: <strong class="num" data-plan="6">$192</strong> / month</div>
+        </div>
+      </div>
+
+      <div class="sched-wrap">
+        <table class="sched">
+          <caption>What happens each month</caption>
+          <thead>
+            <tr><th scope="col"><span hidden>Plan</span></th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">10</th><th scope="col">11</th><th scope="col">12</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Splash Monthly</th>
+              <td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td></tr>
+            <tr><th scope="row">Splash Plus</th>
+              <td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep + awning</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep + awning</span></td></tr>
+            <tr><th scope="row">Splash Total</th>
+              <td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep + roof</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-x">Deep</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-w">Wash</span></td><td><span class="v v-d">Detail + roof</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="terms">Billed monthly. Three-month minimum, then cancel any time. Pause the plan for any month your RV is in storage or on the road. On Splash Total, awning scrub and slide-out seal conditioning are done in months 6 and 12, and the pre-trip check in the month you choose.</p>
+    </div>
+  </section>
+
+  <section class="block" id="repair">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Repair</span>
+        <h2>What we fix</h2>
+        <p class="lede">Most problems show up while we are washing: a cracked seam, a soft spot, a seal that has dried out. We can repair it on the same visit or schedule it.</p>
+      </div>
+      <div class="repairs">
+        <div class="repair"><h3>Roof and seals</h3><p>Lap sealant inspection and reseal, EPDM and TPO patching, vent and skylight replacement, leak tracing.</p></div>
+        <div class="repair"><h3>Slide-outs</h3><p>Seal replacement, alignment, motor and gear service, slide topper repair.</p></div>
+        <div class="repair"><h3>Awnings</h3><p>Fabric replacement, arm and spring repair, motor and switch diagnosis.</p></div>
+        <div class="repair"><h3>Electrical</h3><p>12-volt and 120-volt troubleshooting, converter and inverter replacement, house batteries, lighting, shore power cords.</p></div>
+        <div class="repair"><h3>Plumbing</h3><p>Water pump, water heater, faucets and fittings, dump valves, tank sensors, winterizing and de-winterizing.</p></div>
+        <div class="repair"><h3>Appliances</h3><p>Refrigerator, furnace, rooftop air conditioner and range service.</p></div>
+        <div class="repair"><h3>Exterior</h3><p>Decal and trim replacement, compartment doors and latches, steps, minor fiberglass repair.</p></div>
+        <div class="repair"><h3>Pre-trip check</h3><p>Roof, seals, tires and date codes, lights, propane leak test, batteries and safety detectors, with a written list of what we found.</p></div>
+      </div>
+      <p class="note"><strong>Repair pricing:</strong> $145 per hour with a one-hour diagnostic minimum. Parts are quoted before we order them, and nothing gets replaced without your approval.</p>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">How it works</span>
+        <h2>From request to road-ready</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Tell us about the rig</h3><p>Length, type, and what it needs. Photos of any damage help us bring the right parts.</p></li>
+        <li><h3>Get your quote</h3><p>We reply with a price and the first open time slot.</p></li>
+        <li><h3>We do the work</h3><p>At your driveway, storage lot or campsite. You do not need to be there for a wash.</p></li>
+        <li><h3>Walk-around</h3><p>We show you the finished job and anything we noticed that needs attention later.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>How do I measure my RV?</summary>
+          <p>Measure the outside, front bumper to rear bumper. For a trailer or fifth wheel, include the tongue or pin box. The length on your registration is usually close enough for a quote.</p>
+        </details>
+        <details>
+          <summary>Do you need water and power at my site?</summary>
+          <p>Tell us what is available when you book. If your storage lot or campground has no hookups or restricts washing, we plan the job around that.</p>
+        </details>
+        <details>
+          <summary>Is the roof included?</summary>
+          <p>The roof is washed in the Deep Wash and Full Detail packages. You can add a roof clean and UV treatment to any package for $3 per foot.</p>
+        </details>
+        <details>
+          <summary>How often should an RV be washed?</summary>
+          <p>Wash after every long trip and before storage. A rig that sits outside does best with a wash every month, which is what our monthly plans cover.</p>
+        </details>
+        <details>
+          <summary>Can you wash and repair on the same day?</summary>
+          <p>Usually, for small repairs such as resealing or replacing a latch. Larger jobs that need ordered parts get their own appointment.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="book">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Get a quote</span>
+        <h2>Request service</h2>
+        <p class="lede">Fill this in and we will get back to you with a price and a time.</p>
+      </div>
+      <div class="book">
+        <form id="req" novalidate>
+          <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" autocomplete="name" required></div>
+          <div class="field"><label for="f-phone">Phone</label><input type="tel" id="f-phone" autocomplete="tel" required></div>
+          <div class="field"><label for="f-type">RV type</label>
+            <select id="f-type">
+              <option>Class A motorhome</option><option>Class B van</option><option>Class C motorhome</option>
+              <option>Fifth wheel</option><option>Travel trailer</option><option>Toy hauler</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-service">Service</label>
+            <select id="f-service">
+              <option>Wash (use my estimate above)</option><option>Repair</option><option>Monthly plan: Splash Monthly</option><option>Monthly plan: Splash Plus</option><option>Monthly plan: Splash Total</option><option>Wash and repair</option><option>Pre-trip check</option>
+            </select>
+          </div>
+          <div class="field full"><label for="f-where">Where is the RV parked?</label><input type="text" id="f-where" placeholder="City, storage lot or campground"></div>
+          <div class="field full"><label for="f-notes">Anything we should know?</label><textarea id="f-notes" placeholder="Leaks, damage, access codes, preferred dates"></textarea></div>
+          <p class="field full msg">Requests and bookings follow our <a href="terms.html">Terms and Conditions</a>.</p>
+          <div class="field full"><button class="btn" type="submit">Build my request</button></div>
+          <div id="result" hidden>
+            <strong id="result-msg"></strong>
+            <pre id="result-text"></pre>
+            <button class="ghost" type="button" id="copy">Copy request</button>
+          </div>
+        </form>
+        <div class="contact">
+          <h3>Prefer to talk?</h3>
+          <dl>
+            <div><dt>Call or text</dt><dd class="num">(555) 010-0199</dd></div>
+            <div><dt>Email</dt><dd>hello@rvsplash.com</dd></div>
+            <div><dt>Hours</dt><dd>Mon to Sat, 8 am to 6 pm</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">
+      <span class="wordmark">RV <b>Splash</b></span>
+      <svg viewBox="0 0 480 60" aria-hidden="true"><use href="#stripes"/></svg>
+    </span>
+    <span>RVsplash.com · RV wash and repair · <a href="terms.html" style="color: var(--band-fg)">Terms and Conditions</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('menu-btn');
+  var nav = document.getElementById('site-nav');
+  function setOpen(open) {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.querySelector('span').textContent = open ? 'Close' : 'Menu';
+  }
+  btn.addEventListener('click', function () { setOpen(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('open')) { setOpen(false); btn.focus(); }
+  });
+  document.addEventListener('click', function (e) {
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+  });
+})();
+</script>
+<script>
+(function () {
+  var RATES = { wash: 4, deep: 7, detail: 16 };
+  var NAMES = { wash: 'Wash', deep: 'Deep Wash', detail: 'Full Detail' };
+  var len = document.getElementById('len');
+  var rig = document.getElementById('rig');
+  var X0 = 15, PX = 10, TOP = 30, H = 62, GROUND = 104;
+
+  function drawRig(ft) {
+    var w = ft * PX, s = '';
+    // roof AC and body
+    s += '<rect class="rig-ac" x="' + (X0 + w * 0.42) + '" y="' + (TOP - 9) + '" width="34" height="10" rx="2"/>';
+    s += '<rect class="rig-body" x="' + X0 + '" y="' + TOP + '" width="' + w + '" height="' + H + '" rx="9"/>';
+    // windshield at the front (right)
+    var fx = X0 + w;
+    s += '<path class="rig-glass" d="M' + (fx - 30) + ' ' + (TOP + 9) + 'h20l5 22h-25z"/>';
+    // door
+    s += '<rect class="rig-glass" x="' + (fx - 58) + '" y="' + (TOP + 9) + '" width="16" height="44" rx="2" opacity="0.55"/>';
+    // side windows
+    var room = w - 90, n = Math.max(1, Math.floor(room / 52)), gap = room / n;
+    for (var i = 0; i < n; i++) {
+      s += '<rect class="rig-glass" x="' + (X0 + 14 + i * gap) + '" y="' + (TOP + 9) + '" width="' + Math.min(34, gap - 10) + '" height="18" rx="2"/>';
+    }
+    // stripe
+    s += '<path class="rig-stripe" d="M' + (X0 + 10) + ' ' + (TOP + 42) + 'q' + (w * 0.2) + ' -10 ' + (w * 0.4) + ' 0t' + (w * 0.4) + ' 0"/>';
+    // wheels
+    [0.2, 0.8].forEach(function (p) {
+      var cx = X0 + w * p;
+      s += '<circle class="rig-tire" cx="' + cx + '" cy="' + (GROUND - 11) + '" r="11"/><circle class="rig-hub" cx="' + cx + '" cy="' + (GROUND - 11) + '" r="4"/>';
+    });
+    // ruler in feet
+    var ry = GROUND + 8;
+    s += '<line class="rig-tick" x1="' + X0 + '" y1="' + ry + '" x2="' + (X0 + 45 * PX) + '" y2="' + ry + '"/>';
+    for (var f = 0; f <= 45; f++) {
+      var x = X0 + f * PX, major = f % 5 === 0;
+      s += '<line class="rig-tick" x1="' + x + '" y1="' + ry + '" x2="' + x + '" y2="' + (ry + (major ? 8 : 4)) + '"/>';
+      if (major) s += '<text class="rig-label" x="' + x + '" y="' + (ry + 20) + '">' + f + '</text>';
+    }
+    rig.innerHTML = s;
+  }
+
+  function calc() {
+    var ft = +len.value;
+    var pkg = document.querySelector('input[name="pkg"]:checked').value;
+    var total = ft * RATES[pkg], extras = [];
+    document.querySelectorAll('.addons input:checked').forEach(function (a) {
+      total += a.dataset.ft ? ft * +a.dataset.ft : +a.dataset.flat;
+      extras.push(a.dataset.name);
+    });
+    return { ft: ft, pkg: NAMES[pkg], extras: extras, total: total };
+  }
+
+  function update() {
+    var c = calc();
+    document.getElementById('lenOut').textContent = c.ft;
+    document.getElementById('total').textContent = '$' + c.total.toLocaleString('en-US');
+    drawRig(c.ft);
+    document.querySelectorAll('.plan-len').forEach(function (el) { el.textContent = c.ft; });
+    document.querySelectorAll('[data-plan]').forEach(function (el) {
+      el.textContent = '$' + Math.round(c.ft * +el.dataset.plan).toLocaleString('en-US');
+    });
+  }
+
+  document.querySelector('.est').addEventListener('input', update);
+  update();
+
+  var form = document.getElementById('req');
+  var result = document.getElementById('result');
+  var msg = document.getElementById('result-msg');
+  var out = document.getElementById('result-text');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('f-name').value.trim();
+    var phone = document.getElementById('f-phone').value.trim();
+    result.hidden = false;
+    if (!name || !phone) {
+      msg.textContent = 'Add your name and phone number so we can reach you.';
+      out.hidden = true; document.getElementById('copy').hidden = true;
+      document.getElementById(name ? 'f-phone' : 'f-name').focus();
+      return;
+    }
+    var c = calc(), service = document.getElementById('f-service').value;
+    var lines = [
+      'RV Splash service request',
+      'Name: ' + name,
+      'Phone: ' + phone,
+      'RV: ' + c.ft + ' ft ' + document.getElementById('f-type').value,
+      'Service: ' + service
+    ];
+    var planRates = { 'Splash Monthly': 3.5, 'Splash Plus': 4.5, 'Splash Total': 6 };
+    var planName = service.replace('Monthly plan: ', '');
+    if (planRates[planName]) {
+      lines.push('Plan price: $' + Math.round(c.ft * planRates[planName]).toLocaleString('en-US') + ' / month');
+    } else if (service !== 'Repair' && service !== 'Pre-trip check') {
+      lines.push('Wash package: ' + c.pkg + (c.extras.length ? ' + ' + c.extras.join(', ') : ''));
+      lines.push('Wash estimate: $' + c.total.toLocaleString('en-US'));
+    }
+    var where = document.getElementById('f-where').value.trim();
+    var notes = document.getElementById('f-notes').value.trim();
+    if (where) lines.push('Location: ' + where);
+    if (notes) lines.push('Notes: ' + notes);
+    out.textContent = lines.join('\n');
+    out.hidden = false; document.getElementById('copy').hidden = false;
+    msg.textContent = 'Your request is ready. Copy it and text or email it to us.';
+  });
+
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this;
+    function select() {
+      var r = document.createRange(); r.selectNodeContents(out);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected. Press copy.';
+    }
+    try {
+      navigator.clipboard.writeText(out.textContent).then(function () { btn.textContent = 'Copied'; }, select);
+    } catch (err) { select(); }
+  });
+})();
+</script>
+
+
+
+</body>
+</html>
