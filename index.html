@@ -529,7 +529,7 @@ footer .brand { align-items: stretch; }
           <div class="field full"><label for="f-where">Where is the RV parked?</label><input type="text" id="f-where" placeholder="City, storage lot or campground"></div>
           <div class="field full"><label for="f-notes">Anything we should know?</label><textarea id="f-notes" placeholder="Leaks, damage, access codes, preferred dates"></textarea></div>
           <p class="field full msg">Requests and bookings follow our <a href="terms.html">Terms and Conditions</a>.</p>
-          <div class="field full"><button class="btn" type="submit">Build my request</button></div>
+          <div class="field full"><button class="btn" type="submit">Send my request</button></div>
           <div id="result" hidden>
             <strong id="result-msg"></strong>
             <pre id="result-text"></pre>
@@ -560,6 +560,15 @@ footer .brand { align-items: stretch; }
   </div>
 </footer>
 
+<script>
+/* =============================================================
+   QUOTE EMAIL SETTING  -  EDIT THIS ONE LINE
+   Put the email address that should receive every quote request
+   between the quotes, for example: 'you@yourmail.com'
+   Leave it empty ('') to turn email off.
+   ============================================================= */
+var QUOTE_EMAIL = '';
+</script>
 <script>
 (function () {
   var btn = document.getElementById('menu-btn');
@@ -682,8 +691,38 @@ footer .brand { align-items: stretch; }
     if (where) lines.push('Location: ' + where);
     if (notes) lines.push('Notes: ' + notes);
     out.textContent = lines.join('\n');
-    out.hidden = false; document.getElementById('copy').hidden = false;
-    msg.textContent = 'Your request is ready. Copy it and text or email it to us.';
+    var copyBtn = document.getElementById('copy');
+    function showCopy(text) {
+      out.hidden = false; copyBtn.hidden = false;
+      msg.textContent = text;
+    }
+    if (!window.QUOTE_EMAIL) { showCopy('Your request is ready. Copy it and text or email it to us.'); return; }
+
+    var sendBtn = form.querySelector('button[type="submit"]');
+    sendBtn.disabled = true; sendBtn.textContent = 'Sending…';
+    out.hidden = true; copyBtn.hidden = true;
+    msg.textContent = 'Sending your request…';
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(window.QUOTE_EMAIL), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'New RV Splash quote request from ' + name,
+        _template: 'table',
+        _captcha: 'false',
+        Name: name,
+        Phone: phone,
+        Request: lines.slice(1).join('\n')
+      })
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) {
+      if (!r.ok || String(j.success) === 'false') throw new Error('send failed');
+    }); }).then(function () {
+      msg.textContent = 'Thanks, ' + name + '. Your request was sent. We will reply with a price and the first open time.';
+      form.querySelectorAll('input[type="text"], input[type="tel"], textarea').forEach(function (el) { el.value = ''; });
+    }).catch(function () {
+      showCopy('Your request could not be sent right now. Copy it below and text or email it to us.');
+    }).then(function () {
+      sendBtn.disabled = false; sendBtn.textContent = 'Send my request';
+    });
   });
 
   document.getElementById('copy').addEventListener('click', function () {
